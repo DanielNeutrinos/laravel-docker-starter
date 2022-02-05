@@ -1,6 +1,6 @@
 # Laravel setup using docker
 
-Temporary image with composer to avoid installing composer globally
+Temporary image with composer to avoid installing composer globally. For powershell use ${pwd} instead.
 ```
 $ docker run --rm -v $(pwd):/app composer install
 ```
