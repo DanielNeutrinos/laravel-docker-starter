@@ -5,7 +5,7 @@ services:
     app:
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: build/app/Dockerfile
         image: digitalocean.com/php
         container_name: app
         restart: unless-stopped
@@ -17,6 +17,20 @@ services:
         volumes:
             - ./:/var/www
             - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - app-network
+
+    php-queue:
+        restart: always
+        image: digitalocean.com/php
+        container_name: queue
+        depends_on:
+            - "app"
+            - "db"
+            - "webserver"
+        command: php artisan queue:work
+        volumes:
+            - ./:/var/www
         networks:
             - app-network
 
